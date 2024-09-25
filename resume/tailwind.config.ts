@@ -60,6 +60,7 @@ const config: Config = {
         padding: {
           DEFAULT: "2rem",
         },
+        center: true,
       },
     },
   },

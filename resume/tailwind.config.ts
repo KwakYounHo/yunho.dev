@@ -56,6 +56,11 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      container: {
+        padding: {
+          DEFAULT: "2rem",
+        },
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

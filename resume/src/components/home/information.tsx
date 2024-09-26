@@ -8,7 +8,7 @@ const Information = () => {
         : currentDate.getFullYear() - 1995 - 1,
   };
   return (
-    <div className={"flex flex-col justify-end max-w-xl"} id="info-head">
+    <div className={"flex flex-col justify-end max-w-xl"}>
       <div className={"mb-4"}>
         <h2 className={"text-4xl font-bold"}>곽윤호</h2>
         <div className={"flex gap-2 text-foreground/50 text-sm"}>

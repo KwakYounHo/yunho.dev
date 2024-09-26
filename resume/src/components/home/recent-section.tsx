@@ -13,7 +13,7 @@ const RecentSection = ({ title, children, className }: RecentSectionProps) => {
         {title}
       </h3>
       <div
-        className={`py-3 grid grid-cols-1 md:grid-cols-[0.75fr_0.75fr] lg:grid-cols-[0.75fr_0.75fr_0.75fr] ${className}`}
+        className={`py-3 grid grid-cols-1 md:grid-cols-[0.75fr_0.75fr] xl:grid-cols-[0.75fr_0.75fr_0.75fr] gap-4 ${className}`}
       >
         {children}
       </div>

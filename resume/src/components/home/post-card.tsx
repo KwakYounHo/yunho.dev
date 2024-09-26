@@ -23,21 +23,29 @@ type PostCardProps = {
 const PostCard = ({ title, subject, children, posted_at }: PostCardProps) => {
   const url = `/posts/view/${encodeURIComponent(title)}`;
   return (
-    <Card className={"w-full justify-self-center px-4"}>
+    <Card className={"w-full flex flex-col justify-between px-4"}>
       <CardHeader>
-        <div className={"flex items-end justify-between"}>
+        <div className={"grid grid-cols-[1fr_6rem] gap-4"}>
           <CardTitle className={cn("text-xl font-semibold text-foreground")}>
             {title}
           </CardTitle>
           <CardDescription>{posted_at}</CardDescription>
         </div>
-        <div>
+        <div className={"flex gap-1"}>
           {subject.map((e) => (
-            <Badge variant="default">{e}</Badge>
+            <Badge
+              key={e}
+              variant="default"
+              className={"bg-foreground/80 drop-shadow-md"}
+            >
+              {e}
+            </Badge>
           ))}
         </div>
       </CardHeader>
-      <CardContent>{children}</CardContent>
+      <CardContent className={"h-20 md:h-32 overflow-scroll"}>
+        {children}
+      </CardContent>
       <CardFooter>
         <Link
           href={url}

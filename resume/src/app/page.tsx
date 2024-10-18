@@ -3,6 +3,7 @@ import Image from "next/image";
 // components
 import Information from "@/components/home/information";
 import RecentPosts from "@/components/home/recent-posts";
+import RecentProject from "@/components/home/recent-projects";
 
 export default () => {
   return (
@@ -23,9 +24,8 @@ export default () => {
         />
         <Information />
       </div>
-      <div id="recent-posts">
-        <RecentPosts />
-      </div>
+      <RecentPosts />
+      <RecentProject />
     </div>
   );
 };

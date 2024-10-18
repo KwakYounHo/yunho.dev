@@ -43,7 +43,7 @@ const tempData = [
 
 const RecentPosts = () => {
   return (
-    <RecentSection title="Recent posts" className={"px-3"}>
+    <RecentSection title="Recent posts" page="posts">
       {tempData.map((e) => {
         return (
           <PostCard

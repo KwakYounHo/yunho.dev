@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header
       className={
-        "sticky top-0 w-full h-[4rem] flex justify-center items-center border-border/40 border-b bg-background/95 backdrop-blur text-foreground"
+        "sticky top-0 z-50 w-full h-[4rem] flex justify-center items-center border-border/40 border-b bg-background/95 backdrop-blur text-foreground"
       }
     >
       <div

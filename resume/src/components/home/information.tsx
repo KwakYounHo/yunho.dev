@@ -18,7 +18,6 @@ const Information = () => {
         </div>
       </div>
       <div className={"flex flex-col gap-2"}>
-        <p>풀스택 개발자를 지향하는 곽윤호 입니다.</p>
         <p>
           능력 부족으로 원하는 일을 하지 못하는 상황이 생기지 않도록, <br />
           스스로를 지속적으로 성장시키는 것을 목표로 하고 있습니다.

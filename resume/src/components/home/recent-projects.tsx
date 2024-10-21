@@ -84,7 +84,7 @@ const projects = [
 
 const RecentProject = () => {
   return (
-    <RecentSection title="Resent project" page="project">
+    <RecentSection title="Resent project" page="projects">
       {projects.map((project) => {
         const { id, title, period, stack, reference, description } = project;
         return (

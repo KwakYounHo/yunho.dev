@@ -23,7 +23,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: client
-          dockerfile: client/dockerfile
           push: true
           tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/client:latest
 
@@ -31,7 +30,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: api
-          dockerfile: api/dockerfile
           push: true
           tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/api:latest
 
@@ -39,6 +37,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: db
-          dockerfile: db/Dockerfile
           push: true
           tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/db:latest

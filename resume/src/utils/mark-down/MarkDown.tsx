@@ -9,7 +9,7 @@ import { Controller, FieldValues, Path, type Control } from "react-hook-form";
 export interface EditorProps<T extends FieldValues> extends MDEditorProps {
   initValue?: string;
   name: Path<T>;
-  control: Control<T, any>;
+  control: Control<T>;
 }
 
 export const Editor = <T extends FieldValues>({

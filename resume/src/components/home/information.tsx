@@ -1,12 +1,4 @@
 const Information = () => {
-  const currentDate = new Date();
-  const age: { korean: number; international: number } = {
-    korean: currentDate.getFullYear() - 1995 + 1,
-    international:
-      currentDate.getMonth() > 10
-        ? currentDate.getFullYear() - 1995
-        : currentDate.getFullYear() - 1995 - 1,
-  };
   return (
     <div className={"flex flex-col justify-end max-w-xl"}>
       <div className={"mb-4"}>

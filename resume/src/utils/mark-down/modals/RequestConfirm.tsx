@@ -34,7 +34,7 @@ const RequestConfirm = ({ onConfirm }: RequestConrimProps) => {
         <AlertDialogContent>
           <AlertDialogTitle>등록 하시겠습니까?</AlertDialogTitle>
           <AlertDialogDescription>
-            "취소" 를 누르시면 계속 작성하실 수 있습니다.
+            <code>취소</code> 를 누르시면 계속 작성하실 수 있습니다.
           </AlertDialogDescription>
           <AlertDialogFooter>
             <AlertDialogCancel>취소</AlertDialogCancel>

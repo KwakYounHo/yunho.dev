@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 // containers
 import LeftSideContainer from "./left-side/left-side-container";
 import RightSideContainer from "./right-side/right-side-container";

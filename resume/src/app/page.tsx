@@ -5,7 +5,7 @@ import Information from "@/components/home/information";
 import RecentPosts from "@/components/home/recent-posts";
 import RecentProject from "@/components/home/recent-projects";
 
-export default () => {
+const Home = () => {
   return (
     <div
       className={"container my-6 flex flex-col gap-12"}
@@ -29,3 +29,4 @@ export default () => {
     </div>
   );
 };
+export default Home;

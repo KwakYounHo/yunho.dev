@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 // ui components
 import SkillCard from "./containers/SkillsCard";
 import ContentSection from "./components/ContentSection";
@@ -16,7 +14,6 @@ import {
   planedSkills,
 } from "@/models/about/skills";
 import AboutHeader from "./containers/AboutHeader";
-import MenuTitle from "@/components/ui/menu-title";
 
 const About = () => {
   return (
@@ -184,7 +181,8 @@ const About = () => {
                 아닌 React.js를 사용하여 개발을 진행했습니다.
               </p>
               <p>
-                Next.js의 자동화 된 라우팅 방식을 생각하며, 'react-router-dom'
+                Next.js의 자동화 된 라우팅 방식을 생각하며,{" "}
+                <code>react-router-dom</code>
                 패키지를 활용하여 비슷한 구조를 만들고자 했으며,
               </p>
               <p>

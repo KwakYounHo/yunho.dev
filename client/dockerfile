@@ -1,0 +1,32 @@
+FROM node:20-bullseye AS builder
+
+WORKDIR /build
+
+COPY ./package*.json .
+
+RUN npm install
+
+ENV NODE_ENV=production
+ENV DOMAIN_NAME=yunho.dev
+
+COPY . .
+
+RUN npm run build
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY --from=builder /build/.next/standalone .
+COPY --from=builder /build/.next/static ./.next/static
+COPY public ./public
+
+RUN addgroup --system --gid 1001 nodejs && \
+  adduser --system --uid 1001 --ingroup nodejs nextjs && \
+  chown -R nextjs:nodejs /app
+
+USER nextjs
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]

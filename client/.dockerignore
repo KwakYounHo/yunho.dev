@@ -1,0 +1,6 @@
+*.env.*
+.env
+coverage
+node_modules
+.next
+README.md

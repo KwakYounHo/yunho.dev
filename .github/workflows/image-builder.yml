@@ -25,7 +25,7 @@ jobs:
           context: client
           dockerfile: client/dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}/client:latest
+          tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/client:latest
 
       - name: API Build
         uses: docker/build-push-action@v4
@@ -33,7 +33,7 @@ jobs:
           context: api
           dockerfile: api/dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}/api:latest
+          tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/api:latest
 
       - name: DB Build
         uses: docker/build-push-action@v4
@@ -41,4 +41,4 @@ jobs:
           context: db
           dockerfile: db/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository }}/db:latest
+          tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/db:latest

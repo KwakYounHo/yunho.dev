@@ -95,7 +95,7 @@ const RecentProject = () => {
             stack={stack}
             reference={reference}
           >
-            {project.description}
+            {description}
           </ProjectCard>
         );
       })}

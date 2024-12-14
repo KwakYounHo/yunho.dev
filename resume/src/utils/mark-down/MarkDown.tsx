@@ -26,6 +26,7 @@ export const Editor = <T extends FieldValues>({
       name={name}
       control={control}
       render={({ field }) => {
+        if (initValue) field.onChange(initValue);
         return (
           <div data-color-mode={theme || "system"}>
             <MDEditor value={field.value} onChange={field.onChange} {...rest} />

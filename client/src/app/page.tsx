@@ -1,4 +1,4 @@
-import { ThemeToggle } from "@/app/utils/theme";
+import { ThemeToggle } from "@/utils/theme";
 
 const Home = () => {
   return (

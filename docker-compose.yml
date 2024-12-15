@@ -35,7 +35,7 @@ services:
     networks:
       - proxy
     volumes:
-      - ./certbot/etc/letsencrypt:/etc/letsencrypt
+      - ./certbot/etc:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
       - ./certbot/var/log/letsencrypt:/var/log/letsencrypt
 

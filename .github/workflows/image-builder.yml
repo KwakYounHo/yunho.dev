@@ -1,13 +1,13 @@
-permissions:
-  contents: write
-  packages: write
-
 name: Image Build and Push
 
 on:
   push:
     branches:
       - main
+
+permissions:
+  contents: write
+  packages: write
 
 jobs:
   make-image-for-package:

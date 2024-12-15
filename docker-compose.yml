@@ -4,15 +4,14 @@ services:
     ports:
       - 3112:3000
     networks:
-      - f_proxy
-      - b_proxy
+      - proxy
 
   api:
     image: ${GHCR_IMAGE_URL}/api:latest
     ports:
       - 8008:8000
     networks:
-      - b_proxy
+      - proxy
       - db
 
   db:
@@ -28,10 +27,16 @@ services:
     volumes:
       - db_data:/bitnami/postgresql
 
+  proxy:
+    image: ${GHCR_IMAGE_URL}/proxy:latest
+    ports:
+      - 80:80
+      - 443:443 
+    networks:
+      - proxy
+
 networks:
-  f_proxy:
-    driver: bridge
-  b_proxy:
+  proxy:
     driver: bridge
   db:
     driver: bridge

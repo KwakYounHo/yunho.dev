@@ -2,7 +2,7 @@ services:
   client:
     image: ${GHCR_IMAGE_URL}/client:latest
     ports:
-      - 3000:3000
+      - 3112:3000
     networks:
       - f_proxy
       - b_proxy
@@ -10,7 +10,7 @@ services:
   api:
     image: ${GHCR_IMAGE_URL}/api:latest
     ports:
-      - 8000:8000
+      - 8008:8000
     networks:
       - b_proxy
       - db

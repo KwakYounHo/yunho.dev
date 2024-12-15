@@ -2,14 +2,12 @@ services:
   client:
     image: ${GHCR_IMAGE_URL}/client:latest
     ports:
-      - 3112:3000
     networks:
       - proxy
 
   api:
     image: ${GHCR_IMAGE_URL}/api:latest
     ports:
-      - 8008:8000
     networks:
       - proxy
       - db
@@ -17,7 +15,6 @@ services:
   db:
     image: ${GHCR_IMAGE_URL}/db:latest
     ports:
-      - 5488:5432
     networks:
       - db
     environment:

@@ -4,19 +4,6 @@ const nextConfig: NextConfig = {
   /* config options here */
   // Output
   output: "standalone",
-  // API Proxy
-  async rewrites() {
-    const apiServerUrl =
-      process.env.NODE_ENV === "production"
-        ? `http://api.${process.env.DOMAIN_NAME}`
-        : "https://localhost:8000";
-    return [
-      {
-        source: "/external_api/:path*",
-        destination: `${apiServerUrl}/:path*`,
-      },
-    ];
-  },
   // for Security
   poweredByHeader: false,
   productionBrowserSourceMaps: false,

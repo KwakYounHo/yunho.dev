@@ -8,5 +8,6 @@ module.exports = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
+  testPathIgnorePatterns: ["<rootDir>/src/types/"],
   coveragePathIgnorePatterns: ["<rootDir>/src/types/"],
 };

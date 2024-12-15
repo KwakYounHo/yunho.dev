@@ -34,6 +34,10 @@ services:
       - 443:443 
     networks:
       - proxy
+    volumes:
+      - ./certbot/etc/letsencrypt:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/var/log/letsencrypt:/var/log/letsencrypt
 
 networks:
   proxy:

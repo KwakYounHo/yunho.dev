@@ -1,0 +1,41 @@
+services:
+  client:
+    image: ${GHCR_IMAGE_URL}/client:latest
+    ports:
+      - 3000:3000
+    networks:
+      - f_proxy
+      - b_proxy
+
+  api:
+    image: ${GHCR_IMAGE_URL}/api:latest
+    ports:
+      - 8000:8000
+    networks:
+      - b_proxy
+      - db
+
+  db:
+    image: ${GHCR_IMAGE_URL}/db:latest
+    ports:
+      - 5488:5432
+    networks:
+      - db
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - db_data:/bitnami/postgresql
+
+networks:
+  f_proxy:
+    driver: bridge
+  b_proxy:
+    driver: bridge
+  db:
+    driver: bridge
+
+volumes:
+  db_data:
+    external: true

@@ -17,8 +17,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  // Speedy Web Compiler
-  swcMinify: true,
   // for Security
   poweredByHeader: false,
   productionBrowserSourceMaps: false,

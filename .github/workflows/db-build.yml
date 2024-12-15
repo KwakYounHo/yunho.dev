@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - db/**
 
 permissions:
   contents: write
@@ -22,20 +24,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor}}
           password: ${{ secrets.CHCR_PAT }}
-
-      - name: Client Build
-        uses: docker/build-push-action@v4
-        with:
-          context: client
-          push: true
-          tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/client:latest
-
-      - name: API Build
-        uses: docker/build-push-action@v4
-        with:
-          context: api
-          push: true
-          tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/api:latest
 
       - name: DB Build
         uses: docker/build-push-action@v4

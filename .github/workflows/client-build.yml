@@ -14,7 +14,6 @@ jobs:
     with:
       context: client
       image_name: client
-      build_args: '{"SET_NODE_ENV": "production", "SET_DOMAIN_NAME": "yunho.dev"}'
     secrets:
       REGISTRY_VARIABLE: ${{ secrets.REGISTRY_VARIABLE }}
       CHCR_PAT: ${{ secrets.CHCR_PAT }}

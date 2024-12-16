@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - proxy/**
+  workflow_dispatch:
 
 jobs:
   build:

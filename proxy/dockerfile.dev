@@ -1,0 +1,5 @@
+FROM nginx:1.27.3
+
+COPY dev_conf.d/* /etc/nginx/conf.d/
+
+EXPOSE 80 443

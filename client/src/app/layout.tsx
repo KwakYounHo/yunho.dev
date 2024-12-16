@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/utils/theme";
 import "./globals.css";
+import ToggleAbsolute from "./home-component/ToggleAbsolute";
+import { ReduxProvider } from "@/utils/state/reduxProvider";
 
 export const metadata: Metadata = {
   title: "Juno",
@@ -15,14 +17,17 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <ReduxProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <ToggleAbsolute />
+          </ThemeProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

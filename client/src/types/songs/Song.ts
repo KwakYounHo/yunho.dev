@@ -10,3 +10,7 @@ export interface SongContent {
   lyrics: string;
   analysis: string;
 }
+
+export interface CurrentSong {
+  id: string;
+}

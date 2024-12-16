@@ -8,8 +8,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-ENV DEPLOY_MODE=production
-
 RUN addgroup -S python && \
   adduser -S fastapi && \
   chown -R fastapi:python /app

@@ -9,6 +9,9 @@ on:
       image_name:
         required: true
         type: string
+      build_args:
+        required: false
+        type: object
     secrets:
       REGISTRY_VARIABLE:
         required: true
@@ -40,6 +43,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ${{ inputs.context }}
-          push: true
+          build_args: ${{ toJSON(inputs.build_args) }}
           tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/${{ inputs.image_name }}:latest
           platforms: linux/amd64,linux/arm64
+          push: true

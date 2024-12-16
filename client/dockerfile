@@ -6,8 +6,11 @@ COPY ./package*.json .
 
 RUN npm install
 
-ENV NODE_ENV=production
-ENV DOMAIN_NAME=yunho.dev
+ARG SET_NODE_ENV=production
+ARG SET_DOMAIN_NAME=yunho.dev
+
+ENV NODE_ENV=${SET_NODE_ENV}
+ENV DOMAIN_NAME=${SET_DOMAIN_NAME}
 
 COPY . .
 

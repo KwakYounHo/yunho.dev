@@ -11,6 +11,8 @@ services:
     networks:
       - proxy
       - db
+    environment:
+      - DEPLOY_MODE=production
 
   db:
     image: ${GHCR_IMAGE_URL}/db:latest

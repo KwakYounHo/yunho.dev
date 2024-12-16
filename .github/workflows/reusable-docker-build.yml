@@ -11,7 +11,7 @@ on:
         type: string
       build_args:
         required: false
-        type: object
+        type: string
     secrets:
       REGISTRY_VARIABLE:
         required: true

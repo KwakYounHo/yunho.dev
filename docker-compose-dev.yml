@@ -1,0 +1,46 @@
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: dockerfile.dev
+    container_name: client-dev
+    networks:
+      - app-dev
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./client:/app
+  api:
+    build:
+      context: ./api
+    container_name: api-dev
+    networks:
+      - app-dev
+    environment:
+      - DEPLOY_MODE=development
+    volumes:
+      - ./api:/app
+  db:
+    build:
+      context: ./db
+    container_name: db-dev
+    networks:
+      - app-dev
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: dockerfile.dev
+    container_name: proxy-dev
+    networks:
+      - app-dev
+    ports:
+      - 80:80
+      - 443:443
+
+networks:
+  app-dev:
+    driver: bridge

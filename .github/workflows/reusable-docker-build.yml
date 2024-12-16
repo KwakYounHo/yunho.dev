@@ -45,4 +45,5 @@ jobs:
           context: ${{ inputs.context }}
           tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/${{ inputs.image_name }}:latest
           platforms: linux/amd64,linux/arm64
+          build-args: ${{ fromJSON(inputs.build_args) }}
           push: true

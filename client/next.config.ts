@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
     port: 3000,
     hostname: "0.0.0.0",
   },
+  images: {
+    domains: ["www.gravatar.com"],
+  },
 };
 
 export default nextConfig;

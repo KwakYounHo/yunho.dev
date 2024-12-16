@@ -1,7 +1,6 @@
 services:
   client:
     image: ${GHCR_IMAGE_URL}/client:latest
-    ports:
     networks:
       - proxy
 

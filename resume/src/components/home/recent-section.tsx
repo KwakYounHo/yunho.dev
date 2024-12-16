@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type RecentSectionProps = {
   title: string;
@@ -29,7 +30,10 @@ const RecentSection = ({
         </Link>
       </div>
       <div
-        className={`py-3 grid grid-cols-1 md:grid-cols-[0.75fr_0.75fr] xl:grid-cols-[0.75fr_0.75fr_0.75fr] gap-4 px-3 ${className}`}
+        className={cn(
+          "py-3 grid grid-cols-1 md:grid-cols-[0.75fr_0.75fr] xl:grid-cols-[0.75fr_0.75fr_0.75fr] gap-4 px-3",
+          className
+        )}
       >
         {children}
       </div>

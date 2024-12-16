@@ -1,6 +1,5 @@
 import Video from "./home-component/Video";
 import HomeCard from "./home-component/HomeCard";
-import ToggleAbsolute from "./home-component/ToggleAbsolute";
 import LeftBox from "./home-component/LeftBox";
 
 import { Metadata } from "next";
@@ -21,7 +20,6 @@ const Home = () => {
           </div>
 
           {/* absolute */}
-          <ToggleAbsolute />
           <Video />
         </div>
         {/* contents */}

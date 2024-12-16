@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
     hostname: "0.0.0.0",
   },
   images: {
-    domains: ["www.gravatar.com"],
+    domains: ["www.gravatar.com", "images.genius.com"],
   },
 };
 

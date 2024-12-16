@@ -8,7 +8,7 @@ const songsSlice = createSlice({
   initialState,
   reducers: {
     setSongs: (state, action: PayloadAction<Song[]>) => {
-      state = [...state, ...action.payload];
+      return [...state, ...action.payload];
     },
   },
 });

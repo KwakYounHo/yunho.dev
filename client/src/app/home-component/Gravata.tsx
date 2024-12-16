@@ -1,5 +1,6 @@
 import { FC } from "react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface GravatarProps {
   size?: number;
@@ -13,7 +14,7 @@ const Gravatar: FC<GravatarProps> = ({ size = 200, className }) => {
     <Image
       src={url}
       alt="Gravatar"
-      className={`rounded-full ${className}`}
+      className={cn("rounded-full", className)}
       width={size}
       height={size}
     />

@@ -2,6 +2,7 @@
 
 import { FC, ChangeEvent, useState, Dispatch, SetStateAction } from "react";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 interface InputProps {
   placeholder?: string;
@@ -24,7 +25,10 @@ const FirstImpression: FC<InputProps> = ({ placeholder, className }) => {
       value={motto}
       onChange={handleChange}
       placeholder={placeholder}
-      className={`w-full px-4 py-2 rounded-xl border border-foreground/20 bg-background/20 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-foreground/50 transition-all duration-300 ${className}`}
+      className={cn(
+        "w-full px-4 py-2 rounded-xl border border-foreground/20 bg-background/20 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-foreground/50 transition-all duration-300",
+        className
+      )}
     />
   );
 };

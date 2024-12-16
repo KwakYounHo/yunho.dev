@@ -15,6 +15,7 @@ const TranTestPage = () => {
       <div>
         <button onClick={handleTest}>테스트 하기</button>
         <p>테스트 결과 : {result}</p>
+        <p>Actions 빌드 에러 확인용</p>
       </div>
     </main>
   );

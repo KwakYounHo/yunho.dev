@@ -11,7 +11,10 @@ const Video: FC = () => {
         playsInline
         className="w-full h-full object-cover"
       >
-        <source src="/5871003-hd_1920_1080_30fps.mp4" type="video/mp4" />
+        <source
+          src="https://yunhodev.s3.ap-northeast-2.amazonaws.com/public/5871003-hd_1920_1080_30fps.mp4"
+          type="video/mp4"
+        />
       </video>
     </div>
   );

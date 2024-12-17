@@ -1,5 +1,7 @@
 FROM node:20-bullseye
 
+ENV TZ=Asia/Seoul
+
 WORKDIR /app
 
 COPY package*.json .

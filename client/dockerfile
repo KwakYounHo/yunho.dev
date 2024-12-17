@@ -14,11 +14,14 @@ ENV NODE_ENV=${SET_NODE_ENV}
 ENV DOMAIN_NAME=${SET_DOMAIN_NAME}
 ENV EMAIL=${SET_EMAIL}
 
+
 COPY . .
 
 RUN npm run build
 
 FROM node:20-alpine
+
+ENV TZ=Asia/Seoul
 
 WORKDIR /app
 

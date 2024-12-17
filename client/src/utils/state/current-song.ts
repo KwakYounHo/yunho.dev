@@ -1,15 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CurrentSong } from "@/types/songs";
+import { Song } from "@/types/songs";
 
-const initialState: CurrentSong = {
+const initialState: Song = {
   id: "init",
+  title: "",
+  artist: "",
+  albumCover: "",
 };
 
 const currentSongSlice = createSlice({
   name: "currentSong",
   initialState,
   reducers: {
-    setCurrentSong: (state, action: PayloadAction<CurrentSong>) => {
+    setCurrentSong: (state, action: PayloadAction<Song>) => {
       return action.payload;
     },
   },

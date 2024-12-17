@@ -3,31 +3,61 @@
 import Image from "next/image";
 import { useAppSelector } from "@/app/hooks/state";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Viewer } from "@/utils/Markdown";
+import { useEffect, useState } from "react";
+import { SongContent } from "@/types/songs";
+
+import { addSongContents } from "@/utils/state/song-contents";
+import { useDispatch } from "react-redux";
 
 const LyricsDetail = () => {
   const currentSong = useAppSelector((state) => state.currentSong);
-  const song = useAppSelector((state) => state.songs).find(
-    (song) => song.id === currentSong.id
-  );
+  const songContents = useAppSelector((state) => state.songContents);
+  const [songContent, setSongContent] = useState<SongContent | null>(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!currentSong || currentSong.id === "init") return;
+    const sct = songContents.find((ct) => ct.id === currentSong.id);
+    if (sct) {
+      setSongContent(sct);
+    } else {
+      fetch(`/lyrics/api/${currentSong.id}`)
+        .then((res) => res.json())
+        .then((response) => {
+          if ("error" in response) {
+            alert("Failed to fetch lyrics");
+            return;
+          }
+          dispatch(addSongContents(response.data));
+          setSongContent(response.data);
+        });
+    }
+  }, [currentSong]);
+
+  useEffect(() => {
+    console.log(songContent);
+  }, [songContent]);
+
   return (
-    <ScrollArea>
-      {song && (
-        <>
-          <Image
-            src={song.albumCover}
-            alt={song.title}
-            width={100}
-            height={100}
-          />
-          <h1>{song.title}</h1>
-          <h3>{song.artist}</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-        </>
-      )}
-      {!song && <p>Loading...</p>}
+    <ScrollArea className="w-full h-full">
+      <div className="flex flex-col gap-4 w-full justify-center items-center">
+        {songContent && (
+          <>
+            <Image
+              src={currentSong.albumCover}
+              alt={currentSong.title}
+              width={100}
+              height={100}
+              className="rounded-lg w-1/3"
+            />
+            <h1>{currentSong.title}</h1>
+            <h3>{currentSong.artist}</h3>
+            <Viewer value={songContent.lyrics} />
+          </>
+        )}
+        {!songContent && <p>Loading...</p>}
+      </div>
     </ScrollArea>
   );
 };

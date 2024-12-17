@@ -1,0 +1,67 @@
+.wrapper {
+  @apply prose prose-lg mx-auto text-foreground;
+}
+
+.wrapper h1 {
+  @apply text-3xl font-bold mb-4;
+}
+
+.wrapper h2 {
+  @apply text-2xl font-semibold mb-3;
+}
+
+.wrapper h3 {
+  @apply text-xl font-medium mb-2;
+}
+
+.wrapper p {
+  @apply mb-4 leading-relaxed;
+}
+
+.wrapper a {
+  @apply underline hover:text-primary;
+}
+
+.wrapper ul {
+  @apply list-disc ml-6 mb-4;
+}
+
+.wrapper ol {
+  @apply list-decimal ml-6 mb-4;
+}
+
+.wrapper li {
+  @apply mb-1;
+}
+
+.wrapper blockquote {
+  @apply border-l-4 border-border pl-4 italic mb-4 text-muted-foreground;
+}
+
+.wrapper pre {
+  @apply bg-muted text-foreground p-4 rounded-md mb-4 overflow-x-auto;
+}
+
+.wrapper code {
+  @apply bg-muted px-1 py-0.5 rounded font-mono;
+}
+
+.wrapper hr {
+  @apply my-6 border-t border-border;
+}
+
+.wrapper table {
+  @apply table-auto border-collapse w-full my-4;
+}
+
+.wrapper th {
+  @apply bg-muted font-semibold p-2 border border-border;
+}
+
+.wrapper td {
+  @apply p-2 border border-border;
+}
+
+.wrapper img {
+  @apply max-w-full rounded-md shadow my-4;
+}

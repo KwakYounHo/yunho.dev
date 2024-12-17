@@ -4,7 +4,7 @@ import LyricsList from "./LyricsList";
 
 const GridWrapper = () => {
   return (
-    <div className="lg:grid grid-cols-[0.2fr_1fr] gap-4 justify-center items-start">
+    <div className="lg:grid grid-cols-[0.2fr_0.80fr] gap-4 justify-center items-start">
       <GridItem className="hidden lg:block p-4">
         <LyricsList />
       </GridItem>

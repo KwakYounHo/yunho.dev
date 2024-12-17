@@ -22,7 +22,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "images.genius.com",
+        hostname: "*.genius.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "*.rapgenius.com",
         pathname: "/**",
       },
     ],

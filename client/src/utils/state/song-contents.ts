@@ -7,11 +7,11 @@ const songContentsSlice = createSlice({
   name: "songContents",
   initialState,
   reducers: {
-    setSongContents: (state, action: PayloadAction<SongContent[]>) => {
-      return [...state, ...action.payload];
+    addSongContents: (state, action: PayloadAction<SongContent>) => {
+      return [...state, action.payload];
     },
   },
 });
 
-export const { setSongContents } = songContentsSlice.actions;
+export const { addSongContents } = songContentsSlice.actions;
 export default songContentsSlice.reducer;

@@ -57,7 +57,39 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: "hsl(var(--foreground))",
+            h1: {
+              color: "hsl(var(--foreground))",
+              fontWeight: "700",
+            },
+            h2: {
+              color: "hsl(var(--foreground))",
+              fontWeight: "600",
+            },
+            h3: {
+              color: "hsl(var(--foreground))",
+              fontWeight: "500",
+            },
+            strong: {
+              color: "hsl(var(--foreground))",
+            },
+            blockquote: {
+              color: "hsl(var(--muted-foreground))",
+              borderLeftColor: "hsl(var(--border))",
+            },
+            a: {
+              color: "hsl(var(--primary))",
+              "&:hover": {
+                color: "hsl(var(--primary-foreground))",
+              },
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;

@@ -35,3 +35,29 @@ CREATE TRIGGER update_c_content_timestamp
 BEFORE UPDATE ON c_content
 FOR EACH ROW
 EXECUTE FUNCTION update_timestamp();
+
+DROP PROCEDURE IF EXISTS create_song_with_content;
+
+CREATE OR REPLACE PROCEDURE create_song_with_content(
+    IN p_id UUID,
+    IN p_title VARCHAR(64),
+    IN p_artist VARCHAR(64),
+    IN p_album_cover VARCHAR(255),
+    IN p_lyrics TEXT
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    INSERT INTO song (id, title, artist, album_cover)
+    VALUES (p_id, p_title, p_artist, p_album_cover);
+
+    INSERT INTO c_content (id, lyrics)
+    VALUES (p_id, p_lyrics);
+
+    EXCEPTION
+        WHEN OTHERS THEN
+            ROLLBACK;
+            RAISE;
+END;
+$$;
+

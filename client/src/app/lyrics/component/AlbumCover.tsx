@@ -56,7 +56,7 @@ const AlbumCover: FC = () => {
         />
       )}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-background/90"></div>
-      <div className={cn("absolute inset-0 bg-background/90", hSize)} />
+      <div className={cn("absolute inset-0 bg-background/80", hSize)} />
     </div>
   );
 };

@@ -24,7 +24,7 @@ const HamburgerModal = ({ className }: { className?: string }) => {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
-          className={cn("lg:hidden", className)}
+          className={cn("lg:hidden w-10 h-10", className)}
           variant="outline"
           onClick={toggleDropdown}
         >
@@ -39,14 +39,14 @@ const HamburgerModal = ({ className }: { className?: string }) => {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              d="M4 6h16M4 12h16m-7 6h7"
+              d="M20 6h-16M20 12h-16m7 6h-7"
             />
           </svg>
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="p-0 w-96" side="left">
         <SheetHeader>
-          <SheetTitle>Lyrics</SheetTitle>
+          <SheetTitle className="my-4 flex justify-center">Lyrics</SheetTitle>
         </SheetHeader>
         <ScrollArea className="h-[80vh] max-w-full">
           <LyricsList setIsOpen={setIsOpen} />

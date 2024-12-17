@@ -27,7 +27,7 @@ const LyricsList = (song: Song) => {
       )}
       onClick={handleClick}
     >
-      <div className="flex gap-4 items-center w-full">
+      <div className="flex gap-4 items-center w-full max-w-full">
         <Image
           src={albumCover}
           alt={title}
@@ -35,9 +35,11 @@ const LyricsList = (song: Song) => {
           height={100}
           className="h-[4rem] w-[4rem]"
         />
-        <div className="flex flex-col gap-1 items-start truncate">
-          <p className="text-lg font-bold truncate">{title}</p>
-          <p className="text-sm text-muted-foreground truncate">{artist}</p>
+        <div className="flex flex-col gap-1 items-start truncate overflow-hidden">
+          <p className="text-lg font-bold truncate overflow-hidden">{title}</p>
+          <p className="text-sm text-muted-foreground truncate overflow-hidden">
+            {artist}
+          </p>
         </div>
       </div>
     </Button>

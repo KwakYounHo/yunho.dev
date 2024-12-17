@@ -7,13 +7,15 @@ const Lyrics = () => {
     <main>
       <AlbumCover />
       <div className="container flex flex-col gap-4">
-        <div>
+        <div className="flex flex-col gap-6">
           <div className="flex items-center">
             <h2>Lyrics</h2>
-            <HamburgerModal />
           </div>
         </div>
         <GridWrapper />
+      </div>
+      <div className="fixed top-4 left-4 z-50">
+        <HamburgerModal />
       </div>
     </main>
   );

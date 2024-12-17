@@ -1,0 +1,37 @@
+CREATE TABLE IF NOT EXISTS song (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title VARCHAR(64) NOT NULL,
+  artist VARCHAR(64) NOT NULL,
+  album_cover VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT
+);
+
+CREATE TABLE IF NOT EXISTS c_content (
+  id UUID NOT NULL,
+  lyrics TEXT NOT NULL,
+  analysis TEXT,
+  generate_state INT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT
+);
+
+ALTER TABLE c_content ADD CONSTRAINT fk_song FOREIGN KEY (id) REFERENCES song(id) ON DELETE CASCADE;
+
+CREATE OR REPLACE FUNCTION update_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = CURRENT_TIMESTAMP;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_song_timestamp
+BEFORE UPDATE ON song
+FOR EACH ROW
+EXECUTE FUNCTION update_timestamp();
+
+CREATE TRIGGER update_c_content_timestamp
+BEFORE UPDATE ON c_content
+FOR EACH ROW
+EXECUTE FUNCTION update_timestamp();

@@ -33,11 +33,7 @@ const LyricsDetail = () => {
           setSongContent(response.data);
         });
     }
-  }, [currentSong]);
-
-  useEffect(() => {
-    console.log(songContent);
-  }, [songContent]);
+  }, [currentSong, songContents, dispatch]);
 
   return (
     <ScrollArea className="w-full h-full">

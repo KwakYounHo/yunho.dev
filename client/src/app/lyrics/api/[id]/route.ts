@@ -1,12 +1,14 @@
 import { API_SERVER_URL } from "@/utils/apiServer";
 import { SongResponse, ResponseError } from "@/types/externalAPI";
 import { SongContent } from "@/types/songs";
+import { type NextRequest } from "next/server";
 
-export const GET = async (
-  request: Request,
-  { params }: { params: { id: string } }
-) => {
-  const id = params.id;
+type Context = {
+  params: Promise<{ id: string }>;
+};
+
+export async function GET(_: NextRequest, { params }: Context) {
+  const { id } = await params;
   try {
     const response = await fetch(`${API_SERVER_URL}/lyrics/${id}`);
     if (!response.ok) {
@@ -34,4 +36,4 @@ export const GET = async (
     console.error(err);
     return Response.json({ error: err.message }, { status: err.cause });
   }
-};
+}

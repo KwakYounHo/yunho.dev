@@ -24,11 +24,7 @@ export const GET = async () => {
     const err: ResponseError =
       error instanceof ResponseError
         ? error
-        : new ResponseError(
-            "InternalServerError",
-            "Internal Server Error",
-            500
-          );
+        : new ResponseError("InternalServerError", String(error), 500);
     console.error(err);
     return Response.json({ error: err.message }, { status: err.cause });
   }

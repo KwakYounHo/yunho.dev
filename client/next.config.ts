@@ -14,7 +14,18 @@ const nextConfig: NextConfig = {
     hostname: "0.0.0.0",
   },
   images: {
-    domains: ["www.gravatar.com", "images.genius.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.gravatar.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.genius.com",
+        pathname: "/**",
+      },
+    ],
   },
 };
 

@@ -3,6 +3,9 @@ services:
     image: ${GHCR_IMAGE_URL}/client:latest
     networks:
       - proxy
+    environment:
+      - NODE_ENV=production
+      - DOMAIN_NAME=${DOMAIN_NAME}
 
   api:
     image: ${GHCR_IMAGE_URL}/api:latest

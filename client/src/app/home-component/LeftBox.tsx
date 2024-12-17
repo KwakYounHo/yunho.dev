@@ -12,7 +12,7 @@ const LeftBox = () => {
             className="w-full h-16 p-8"
             placeholder="What was your first impression of me?"
           />
-          <Button variant="default" className="text-foreground">
+          <Button variant="default" className="text-background">
             Submit
           </Button>
         </div>

@@ -22,7 +22,6 @@ const Home = () => {
           {/* absolute */}
           <Video />
         </div>
-        {/* contents */}
       </div>
     </main>
   );

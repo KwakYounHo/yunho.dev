@@ -9,7 +9,7 @@ const GridItem = ({ children, className }: GridItemProps) => {
   return (
     <div
       className={cn(
-        "flex flex-col border border-foreground/20 rounded-lg p-4 shadow-md shadow-foreground/20 w-full bg-background",
+        "flex flex-col border border-foreground/20 rounded-lg p-4 shadow-md shadow-foreground/20 w-full bg-background/80",
         className
       )}
     >

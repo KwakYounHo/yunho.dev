@@ -1,51 +1,59 @@
 "use client";
 
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { useAppDispatch } from "@/app/hooks/state";
-import { useAppSelector } from "@/app/hooks/state";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import Lyrics from "./Lyrics";
+import { Song } from "@/types/songs";
+import { useEffect } from "react";
+import { SongResponse } from "@/types/externalAPI/Response";
+import { useAppSelector, useAppDispatch } from "@/app/hooks/state";
+import { setSongs } from "@/utils/state/songs";
 import { setCurrentSong } from "@/utils/state/current-song";
-import { cn } from "@/lib/utils";
 
 interface LyricsListProps {
-  id: string;
-  title: string;
-  artist: string;
-  image: string;
+  setIsOpen?: (isOpen: boolean) => void;
 }
-
-const LyricsList = ({ id, title, artist, image }: LyricsListProps) => {
+const LyricsList = ({ setIsOpen }: LyricsListProps) => {
+  const songs = useAppSelector((state) => state.songs);
   const dispatch = useAppDispatch();
   const currentSong = useAppSelector((state) => state.currentSong);
 
-  const handleClick = () => {
-    dispatch(setCurrentSong({ id }));
-  };
+  useEffect(() => {
+    if (songs.length === 0) {
+      fetch("/lyrics/api/")
+        .then((res) => res.json())
+        .then((response: SongResponse<Song[]>) => {
+          if ("data" in response) {
+            dispatch(setSongs(response.data));
+          } else {
+            alert("데이터를 받아오는데 실패했습니다.");
+          }
+        });
+    }
+  }, [songs.length, dispatch]);
+
+  useEffect(() => {
+    if (currentSong.id !== "init") return;
+    dispatch(setCurrentSong(songs[0]));
+  }, [songs, currentSong.id, dispatch]);
 
   return (
-    <Button
-      variant="ghost"
-      asChild
-      className={cn(
-        "w-full h-24 justify-start border border-foreground/10 rounded-lg p-4 hover:bg-primary/10 transition-all duration-300 scale-90 hover:scale-95 hover:cursor-pointer",
-        currentSong.id === id && "bg-primary/10 focus:bg-primary/10"
-      )}
-      onClick={handleClick}
-    >
-      <div className="flex gap-4 items-center">
-        <Image
-          src={image}
-          alt={title}
-          width={100}
-          height={100}
-          className="h-16 w-16"
-        />
-        <div className="flex flex-col gap-1 items-start">
-          <p className="text-lg font-bold">{title}</p>
-          <p className="text-sm text-muted-foreground">{artist}</p>
+    <ScrollArea className="lg:h-[50vh]">
+      <div className="flex flex-col gap-4">
+        <h3 className="text-xl font-bold text-muted-foreground">Lyrics List</h3>
+        <div>
+          {songs.map((song) => {
+            return (
+              <div
+                onClick={setIsOpen && (() => setIsOpen(false))}
+                key={song.id}
+              >
+                <Lyrics {...song} />
+              </div>
+            );
+          })}
         </div>
       </div>
-    </Button>
+    </ScrollArea>
   );
 };
 

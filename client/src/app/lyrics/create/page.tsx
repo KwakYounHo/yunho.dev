@@ -9,12 +9,9 @@ import PopoverCommand from "./PopoverCommand";
 import MarkdownEditor from "@/utils/Markdown/Editor";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { useDispatch } from "react-redux";
-import { addSong } from "@/utils/state/songs";
 import { useRouter } from "next/navigation";
 
 const CreateLyrics = () => {
-  const dispatch = useDispatch();
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
@@ -34,8 +31,6 @@ const CreateLyrics = () => {
       body: JSON.stringify(data),
     });
     if (response.status === 201) {
-      const result = await response.json();
-      dispatch(addSong(result.data));
       alert("Lyrics created successfully");
       setIsFetching(false);
       router.push("/lyrics");

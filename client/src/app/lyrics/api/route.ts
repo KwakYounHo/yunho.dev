@@ -47,10 +47,12 @@ export const POST = async (request: Request) => {
       );
     }
     const responseData: SongResponse<Song[]> = await response.json();
-    return Response.json(
-      { data: responseData },
-      { status: 201, headers: { "Content-Type": "application/json" } }
-    );
+    if ("data" in responseData) {
+      return Response.json(
+        { data: responseData.data },
+        { status: 201, headers: { "Content-Type": "application/json" } }
+      );
+    }
   } catch (error) {
     const err: ResponseError =
       error instanceof ResponseError

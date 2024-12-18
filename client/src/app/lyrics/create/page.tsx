@@ -35,9 +35,9 @@ const CreateLyrics = () => {
     });
     if (response.status === 201) {
       const result = await response.json();
-      dispatch(addSong(result.data[0]));
-      setIsFetching(false);
+      dispatch(addSong(result.data));
       alert("Lyrics created successfully");
+      setIsFetching(false);
       router.push("/lyrics");
     } else {
       alert("Failed to fetch lyrics");

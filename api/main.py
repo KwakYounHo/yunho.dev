@@ -93,7 +93,7 @@ async def create_song(request: Request):
         conn.close()
         
         return JSONResponse(
-            content={"data": [created_song]},  # 배열로 감싸서 반환
+            content={"data": created_song},
             status_code=201
         )
         

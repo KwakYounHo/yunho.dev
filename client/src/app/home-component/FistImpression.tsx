@@ -26,7 +26,7 @@ const FirstImpression: FC<InputProps> = ({ placeholder, className }) => {
       method: "POST",
       body: JSON.stringify({ text: motto }),
     });
-    if (!response.ok) {
+    if (response.status >= 400) {
       setMotto("");
       return;
     }
@@ -34,6 +34,7 @@ const FirstImpression: FC<InputProps> = ({ placeholder, className }) => {
     if (res.data === "done") {
       dispatch(setImpressive({ text: motto }));
       setMotto("");
+      return;
     }
   };
 

@@ -11,12 +11,11 @@ export const POST = async (req: NextRequest) => {
       },
       body: JSON.stringify(body),
     });
-    if (!response.ok) {
-      throw new Error("Failed to fetch data - (Impressive)");
-    }
-    if ("data" in response) {
+    if (response.status < 400) {
       const res = await response.json();
       return Response.json(res, { status: 201 });
+    } else {
+      throw new Error("Failed to fetch data - (Impressive)");
     }
   } catch (error) {
     console.error(error);

@@ -11,6 +11,7 @@ import { addSongContents } from "@/utils/state/song-contents";
 import { useDispatch } from "react-redux";
 
 const LyricsDetail = () => {
+  const songs = useAppSelector((state) => state.songs);
   const currentSong = useAppSelector((state) => state.currentSong);
   const songContents = useAppSelector((state) => state.songContents);
   const [songContent, setSongContent] = useState<SongContent | null>(null);
@@ -52,7 +53,8 @@ const LyricsDetail = () => {
             <Viewer value={songContent.lyrics} />
           </>
         )}
-        {!songContent && <p>Loading...</p>}
+        {songs.length === 0 && <p>표시할 데이터가 없습니다</p>}
+        {songs.length > 0 && songContent && <p>Loading...</p>}
       </div>
     </ScrollArea>
   );

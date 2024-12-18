@@ -25,6 +25,15 @@ type Setters = {
   setAlbumCover: React.Dispatch<React.SetStateAction<string>>;
 };
 
+interface SearchResult {
+  result: {
+    id: string;
+    title: string;
+    artist_names: string;
+    header_image_url: string;
+  };
+}
+
 const PopoverCommand = ({
   values,
   setters,
@@ -35,14 +44,23 @@ const PopoverCommand = ({
   const { title, artist, albumCover } = values;
   const { setTitle, setArtist, setAlbumCover } = setters;
   const [search, setSearch] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const searchFetch = async (keyword: string, signal: AbortSignal) => {
-    const response = await fetch(`/lyrics/search?q=${keyword}`, { signal });
-    const data = await response.json();
-    if (data.error) setSearchResult([]);
-    setSearchResult(data);
+    try {
+      const response = await fetch(`/lyrics/search?q=${keyword}`, { signal });
+      const data = await response.json();
+      if (data.error || !Array.isArray(data)) {
+        setSearchResult([]);
+      } else {
+        setSearchResult(data);
+      }
+    } catch (error) {
+      setSearchResult([]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {

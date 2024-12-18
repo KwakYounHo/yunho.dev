@@ -57,6 +57,7 @@ const PopoverCommand = ({
         setSearchResult(data);
       }
     } catch (error) {
+      console.error(error);
       setSearchResult([]);
     } finally {
       setIsLoading(false);

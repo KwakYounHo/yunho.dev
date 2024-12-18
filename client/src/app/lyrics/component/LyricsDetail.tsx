@@ -54,7 +54,7 @@ const LyricsDetail = () => {
           </>
         )}
         {songs.length === 0 && <p>표시할 데이터가 없습니다</p>}
-        {songs.length > 0 && songContent && <p>Loading...</p>}
+        {songs.length > 0 && !songContent && <p>Loading...</p>}
       </div>
     </ScrollArea>
   );

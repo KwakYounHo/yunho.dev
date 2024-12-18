@@ -6,6 +6,7 @@ services:
     environment:
       - NODE_ENV=production
       - DOMAIN_NAME=${DOMAIN_NAME}
+      - NEXT_PUBLIC_GENIUS_API_KEY=${NEXT_PUBLIC_GENIUS_API_KEY}
 
   api:
     image: ${GHCR_IMAGE_URL}/api:latest

@@ -11,13 +11,14 @@ export const GET = async (req: NextRequest) => {
       },
       signal: abort.signal,
     });
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       abort.abort();
-    }, 7000);
+    }, 30000);
     if (!response.ok) {
       throw new Error("Failed to fetch lyrics");
     }
     const data = await response.json();
+    clearTimeout(timeoutId);
     return Response.json(data.response.hits, {
       status: 200,
       headers: { "Content-Type": "application/json" },

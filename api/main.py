@@ -54,6 +54,7 @@ def songs():
         return JSONResponse(content={"data": songs}, status_code=200)
         
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/lyrics")
@@ -90,6 +91,7 @@ async def create_song(request: Request):
         )
         
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/lyrics/{id}")
@@ -114,6 +116,7 @@ def lyrics(id: str):
         
         return JSONResponse(content={"data": song_content}, status_code=200)
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/impressive")
@@ -132,4 +135,5 @@ async def create_impressive(request: Request):
         
         return JSONResponse(content={"data": "done"}, status_code=201)
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail=str(e))

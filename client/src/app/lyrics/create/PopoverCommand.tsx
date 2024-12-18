@@ -74,7 +74,6 @@ const PopoverCommand = ({
       }, 1500);
       return () => {
         clearTimeout(timeout);
-        abort.abort();
       };
     }
   }, [search, isLoading]);

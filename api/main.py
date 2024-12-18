@@ -47,8 +47,11 @@ def songs():
         
         cur.close()
         conn.close()
+
+        if not songs:
+            return JSONResponse(content={"data": []}, status_code=200)
         
-        return JSONResponse(content=songs)
+        return JSONResponse(content={"data": songs}, status_code=200)
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -110,5 +113,23 @@ def lyrics(id: str):
         conn.close()
         
         return JSONResponse(content={"data": song_content}, status_code=200)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/impressive")
+async def create_impressive(request: Request):
+    try:
+        body = await request.json()
+        text = body.get("text")
+        
+        conn = get_db_connection()
+        cur = conn.cursor()
+        
+        cur.execute("INSERT INTO impressive (text) VALUES (%s)", (text,))
+        conn.commit()
+        cur.close()
+        conn.close()
+        
+        return JSONResponse(content={"data": "done"}, status_code=201)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

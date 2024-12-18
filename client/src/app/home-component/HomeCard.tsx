@@ -1,6 +1,6 @@
 import Gravatar from "./Gravata";
 import Link from "next/link";
-
+import Impressive from "./Impressive";
 const HomeCard = () => {
   return (
     <div className="flex flex-col items-center text-center gap-4">
@@ -17,9 +17,7 @@ const HomeCard = () => {
             Software Developer
           </p>
         </div>
-        <p className="xl:text-lg text-sm text-foreground/80 dark:text-muted-foreground">
-          Anxiety arises from ignorance
-        </p>
+        <Impressive />
       </div>
     </div>
   );

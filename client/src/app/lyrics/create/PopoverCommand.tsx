@@ -72,7 +72,7 @@ const PopoverCommand = ({
         setIsLoading(true);
         searchFetch(search, abort.signal);
         setIsLoading(false);
-      }, 1500);
+      }, 1000);
       return () => {
         clearTimeout(timeout);
       };

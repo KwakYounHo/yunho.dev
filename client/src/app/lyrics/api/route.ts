@@ -38,6 +38,9 @@ export const POST = async (request: Request) => {
     const response = await fetch(`${API_SERVER_URL}/lyrics`, {
       method: "POST",
       body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     if (!response.ok) {
       throw new ResponseError(

@@ -2,19 +2,21 @@
 
 import Image from "next/image";
 import { useAppSelector } from "@/app/hooks/state";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Viewer } from "@/utils/Markdown";
 import { useEffect, useState } from "react";
 import { SongContent } from "@/types/songs";
-
 import { addSongContents } from "@/utils/state/song-contents";
 import { useDispatch } from "react-redux";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 
 const LyricsDetail = () => {
   const songs = useAppSelector((state) => state.songs);
   const currentSong = useAppSelector((state) => state.currentSong);
   const songContents = useAppSelector((state) => state.songContents);
   const [songContent, setSongContent] = useState<SongContent | null>(null);
+  const [tab, setTab] = useState<"lyrics" | "analysis">("lyrics");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,7 +52,21 @@ const LyricsDetail = () => {
             />
             <h1>{currentSong.title}</h1>
             <h3>{currentSong.artist}</h3>
-            <Viewer value={songContent.lyrics} />
+            <div className="flex gap-4">
+              <Button onClick={() => setTab("lyrics")}>가사</Button>
+              <Button onClick={() => setTab("analysis")}>분석</Button>
+            </div>
+            {tab === "lyrics" && (
+              <Viewer value={songContent.lyrics} className="animation-in" />
+            )}
+            {tab === "analysis" &&
+              (songContent.analysis ? (
+                <Viewer value={songContent.analysis} className="animation-in" />
+              ) : (
+                <div className="mt-2 text-center w-full animation-in">
+                  <p className="text-lg">아직 분석이 등록되지 않았습니다.</p>
+                </div>
+              ))}
           </>
         )}
         {songs.length === 0 && <p>표시할 데이터가 없습니다</p>}

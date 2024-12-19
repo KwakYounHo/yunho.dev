@@ -4,7 +4,7 @@ import { API_SERVER_URL } from "@/utils/apiServer";
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
   try {
-    const response = await fetch(`${API_SERVER_URL}/impressive`, {
+    const response = await fetch(`${API_SERVER_URL}/api/impressive`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

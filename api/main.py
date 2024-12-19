@@ -9,13 +9,6 @@ import os
 app = FastAPI()
 
 # 데이터 모델 정의
-class SongCreate(BaseModel):
-    id: str
-    title: str
-    artist: str
-    albumCover: str
-    lyrics: str
-
 DB_USER = os.getenv("POSTGRES_USER", "postgres")
 DB_PASSWORD = os.getenv("POSTGRES_PASSWORD", "postgres")
 DB_HOST = os.getenv("POSTGRES_HOST", "db-dev")
@@ -52,9 +45,6 @@ def songs():
         
         songs = cur.fetchall()
         
-        cur.close()
-        conn.close()
-
         if not songs:
             return JSONResponse(content={"data": []}, status_code=200)
         
@@ -63,34 +53,35 @@ def songs():
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+        cur.close()
+
+class SongCreate(BaseModel):
+    id: str
+    title: str
+    artist: str
+    albumCover: str
+    lyrics: str
 
 @app.post("/lyrics")
-async def create_song(request: Request):
+async def create_song(request: SongCreate):
     try:
-        # 요청 본문을 JSON으로 파싱
-        body = await request.json()
-        # Pydantic 모델로 변환
-        song = SongCreate(**body)
-        
         conn = get_db_connection()
         cur = conn.cursor()
         
-        # 프로시저 호출
         cur.execute(
             "CALL create_song_with_content(%s, %s, %s, %s, %s)",
-            (song.id, song.title, song.artist, song.albumCover, song.lyrics)
+            (request.id, request.title, request.artist, request.albumCover, request.lyrics)
         )
         
-        # song 테이블에서 생성된 데이터 조회
         cur.execute(
             "SELECT id, title, artist, album_cover as \"albumCover\" FROM song WHERE id = %s",
-            (song.id,)
+            (request.id,)
         )
         created_song = cur.fetchone()
         
         conn.commit()
-        cur.close()
-        conn.close()
         
         return JSONResponse(
             content={"data": created_song},
@@ -99,7 +90,9 @@ async def create_song(request: Request):
         
     except Exception as e:
         print(e)
-        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+        cur.close()
 
 @app.get("/lyrics/{id}")
 def lyrics(id: str):
@@ -118,29 +111,30 @@ def lyrics(id: str):
         """, (id,))
         song_content = cur.fetchone()
         
-        cur.close()
-        conn.close()
-        
         return JSONResponse(content={"data": song_content}, status_code=200)
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+        cur.close()
+
+class ImpressiveRequest(BaseModel):
+    text: str
 
 @app.post("/impressive")
-async def create_impressive(request: Request):
+async def create_impressive(request: ImpressiveRequest):
     try:
-        body = await request.json()
-        text = body.get("text")
-        
         conn = get_db_connection()
         cur = conn.cursor()
         
-        cur.execute("INSERT INTO impressive (text) VALUES (%s)", (text,))
+        cur.execute("INSERT INTO impressive (text) VALUES (%s)", (request.text,))
         conn.commit()
-        cur.close()
-        conn.close()
         
         return JSONResponse(content={"data": "done"}, status_code=201)
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+        cur.close()

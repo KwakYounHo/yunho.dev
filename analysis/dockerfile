@@ -1,0 +1,26 @@
+FROM python:3.12-alpine
+
+ENV TZ=Asia/Seoul
+
+WORKDIR /app
+
+RUN pip install --upgrade pip
+
+COPY requirements.txt .
+
+RUN apk add --no-cache postgresql-libs libgcc && \
+  apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev rust cargo && \
+  pip install -r requirements.txt && \
+  apk --purge del .build-deps
+
+COPY . .
+
+RUN addgroup -S python && \
+  adduser -S analysis && \
+  chown -R analysis:python /app
+
+USER analysis
+
+EXPOSE 8100
+
+CMD ["python", "run.py"]

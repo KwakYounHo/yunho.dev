@@ -20,6 +20,17 @@ services:
       - DEPLOY_MODE=development
     volumes:
       - ./api:/app
+  analysis:
+    build: 
+      context: ./analysis
+    container_name: analysis-dev
+    networks:
+      - app-dev
+    environment:
+      - DEPLOY_MODE=development
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./analysis:/app
   db:
     build:
       context: ./db

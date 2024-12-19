@@ -1,0 +1,19 @@
+name: Analysis Image Build and Push
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - analysis/**
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/reusable-docker-build.yml
+    with:
+      context: analysis
+      image_name: analysis
+    secrets:
+      REGISTRY_VARIABLE: ${{ secrets.REGISTRY_VARIABLE }}
+      CHCR_PAT: ${{ secrets.CHCR_PAT }}

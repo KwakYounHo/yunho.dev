@@ -21,6 +21,22 @@ services:
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_DB=${POSTGRES_DB}
 
+  analysis:
+    image: ${GHCR_IMAGE_URL}/analysis:latest
+    networks:
+      - proxy
+      - db
+    environment:
+      - DEPLOY_MODE=production
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - ./analysis/prompt_template:/app/prompt_template
+
   db:
     image: ${GHCR_IMAGE_URL}/db:latest
     networks:

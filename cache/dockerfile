@@ -1,0 +1,14 @@
+FROM redis:7.4.1
+
+ENV TZ=Asia/Seoul
+
+COPY redis.conf /usr/local/etc/redis/redis.conf
+
+RUN addgroup --system redis && adduser --system --ingroup redis redis && \
+  chown -R redis:redis /usr/local/etc/redis
+
+USER redis
+
+EXPOSE 6400
+
+CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]

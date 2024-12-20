@@ -27,7 +27,6 @@ services:
       - proxy
       - db
     environment:
-      - DEPLOY_MODE=production
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -36,6 +35,14 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - ./analysis/prompt_template:/app/prompt_template
+  
+  cache:
+    image: ${GHCR_IMAGE_URL}/cache:latest
+    networks:
+      - proxy
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
 
   db:
     image: ${GHCR_IMAGE_URL}/db:latest

@@ -1,8 +1,8 @@
-import uvicorn
-import os
+import utils.logger
+from utils.task_queue import task_worker
 
-mode = os.getenv("DEPLOY_MODE", "production")
-reload_mode = mode != "production"
+logger = utils.logger.getLogger(__name__)
 
 if __name__ == "__main__":
-  uvicorn.run("main:app", host="0.0.0.0", port=8100, workers=4, reload=reload_mode)
+    logger.info("task_worker Service start")
+    task_worker()

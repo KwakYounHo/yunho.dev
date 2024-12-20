@@ -1,30 +1,11 @@
-from fastapi import FastAPI, HTTPException, Request
+import json
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-import psycopg2
-from psycopg2.extras import RealDictCursor
-
-import os
+from utils.db_connection import get_db_connection
+from utils.redis_client import add_task
 
 app = FastAPI()
-
-# 데이터 모델 정의
-DB_USER = os.getenv("POSTGRES_USER", "postgres")
-DB_PASSWORD = os.getenv("POSTGRES_PASSWORD", "postgres")
-DB_HOST = os.getenv("POSTGRES_HOST", "db-dev")
-DB_PORT = os.getenv("POSTGRES_PORT", "5432")
-DB_DB = os.getenv("POSTGRES_DB", "postgres")
-
-# 데이터베이스 연결 설정
-def get_db_connection():
-    return psycopg2.connect(
-        dbname=DB_DB,
-        user=DB_USER,
-        password=DB_PASSWORD,
-        host=DB_HOST,
-        port=DB_PORT,
-        cursor_factory=RealDictCursor
-    )
 
 @app.get("/lyrics")
 def songs():
@@ -32,7 +13,6 @@ def songs():
         conn = get_db_connection()
         cur = conn.cursor()
         
-        # song 테이블 전체 조회 (최신순)
         cur.execute("""
             SELECT 
                 id,
@@ -110,6 +90,10 @@ def lyrics(id: str):
             WHERE id = %s
         """, (id,))
         song_content = cur.fetchone()
+
+        if song_content["generateState"] == 0:
+            print("analyze request!")
+            add_task("analyze", {"song_id": id})
         
         return JSONResponse(content={"data": song_content}, status_code=200)
     except Exception as e:

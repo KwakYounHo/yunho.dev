@@ -21,6 +21,4 @@ RUN addgroup -S python && \
 
 USER analysis
 
-EXPOSE 8100
-
 CMD ["python", "run.py"]

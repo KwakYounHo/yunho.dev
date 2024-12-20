@@ -41,6 +41,13 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+  cache:
+    build:
+      context: ./cache
+    container_name: cache-dev
+    networks:
+      - app-dev
+
   proxy:
     build:
       context: ./proxy

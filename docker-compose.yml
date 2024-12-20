@@ -20,6 +20,8 @@ services:
       - POSTGRES_HOST=${POSTGRES_HOST}
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_DB=${POSTGRES_DB}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
 
   analysis:
     image: ${GHCR_IMAGE_URL}/analysis:latest
@@ -33,6 +35,8 @@ services:
       - POSTGRES_HOST=${POSTGRES_HOST}
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_DB=${POSTGRES_DB}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
     volumes:
       - ./analysis/prompt_template:/app/prompt_template
   
@@ -40,9 +44,6 @@ services:
     image: ${GHCR_IMAGE_URL}/cache:latest
     networks:
       - proxy
-    environment:
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
 
   db:
     image: ${GHCR_IMAGE_URL}/db:latest

@@ -2,8 +2,6 @@ langchain
 langchain-community
 langchain-openai
 
-fastapi
-uvicorn
 psycopg2-binary
 pydantic
 

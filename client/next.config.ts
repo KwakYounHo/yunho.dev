@@ -30,6 +30,11 @@ const nextConfig: NextConfig = {
         hostname: "*.rapgenius.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "yunhodev.s3.ap-northeast-2.amazonaws.com",
+        pathname: "/public/**",
+      },
     ],
   },
 };

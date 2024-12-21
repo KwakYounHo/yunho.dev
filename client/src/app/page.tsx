@@ -1,4 +1,4 @@
-import Video from "./home-component/Video";
+import BackgroundImage from "./home-component/BackgroundImage";
 import HomeCard from "./home-component/HomeCard";
 import LeftBox from "./home-component/LeftBox";
 
@@ -20,7 +20,7 @@ const Home = () => {
           </div>
 
           {/* absolute */}
-          <Video />
+          <BackgroundImage />
         </div>
       </div>
     </main>

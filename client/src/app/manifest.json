@@ -2,6 +2,7 @@
   "name": "Juno",
   "short_name": "Juno",
   "description": "Welcome to my Hello World :D",
+  "start_url": "/",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

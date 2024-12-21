@@ -1,9 +1,11 @@
-import json
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from utils.db_connection import get_db_connection
 from utils.redis_client import add_task
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 app = FastAPI()
 
@@ -22,7 +24,7 @@ def songs():
             FROM song
             ORDER BY created_at DESC
         """)
-        
+
         songs = cur.fetchall()
         
         if not songs:
@@ -31,7 +33,7 @@ def songs():
         return JSONResponse(content={"data": songs}, status_code=200)
         
     except Exception as e:
-        print(e)
+        logger.error(e)
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         conn.close()
@@ -69,7 +71,7 @@ async def create_song(request: SongCreate):
         )
         
     except Exception as e:
-        print(e)
+        logger.error(e)
     finally:
         conn.close()
         cur.close()
@@ -92,12 +94,12 @@ def lyrics(id: str):
         song_content = cur.fetchone()
 
         if song_content["generateState"] == 0:
-            print("analyze request!")
             add_task("analyze", {"song_id": id})
+            logger.info(f"Added analyze task to task queue id:{id}")
         
         return JSONResponse(content={"data": song_content}, status_code=200)
     except Exception as e:
-        print(e)
+        logger.error(e)
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         conn.close()
@@ -117,7 +119,7 @@ async def create_impressive(request: ImpressiveRequest):
         
         return JSONResponse(content={"data": "done"}, status_code=201)
     except Exception as e:
-        print(e)
+        logger.error(e)
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         conn.close()

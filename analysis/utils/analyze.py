@@ -1,8 +1,12 @@
 import os
 
+from utils.logger import getLogger
+
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage
 from langchain_core.prompts.chat import HumanMessagePromptTemplate
+
+logger = getLogger(__name__)
 
 with open("prompt_template/assistant.txt", "r", encoding="utf-8") as f:
   assistant_introduction = f.read()
@@ -28,5 +32,5 @@ def analyze(markdown_text):
     feedback = llm.invoke(messages)
     return feedback.content
   except Exception as e:
-    print(f"Error: {e}")
+    logger.error(f"Error: {e}")
     return None

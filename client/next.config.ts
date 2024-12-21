@@ -9,10 +9,8 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   compress: true,
   // server config
-  serverRuntimeConfig: {
-    port: 3000,
-    hostname: "0.0.0.0",
-  },
+  hostname: "0.0.0.0",
+  port: 3000,
   images: {
     remotePatterns: [
       {

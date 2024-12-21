@@ -47,7 +47,7 @@ def task_worker():
           logger.info(f"[analyze] was done successfully, set generate_state to 2, id: {args['song_id']}")
           conn.commit()
           analyze_end = time.time()
-          logger.info(f"[analyze] Task was done successfully, time: {analyze_end - analyze_start}s")
+          logger.info(f"[analyze] Task was done successfully, time: {round(analyze_end - analyze_start, 3)}s")
 
         except Exception as e:
           logger.error(f"[Error] {e}")

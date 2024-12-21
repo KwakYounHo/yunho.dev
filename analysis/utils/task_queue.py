@@ -1,7 +1,9 @@
+import time
 import json
 import os
 import redis
 import utils.logger
+
 from utils.db_connection import get_db_connection
 from utils.analyze import analyze
 
@@ -24,6 +26,7 @@ def task_worker():
 
       if function_name == "analyze":
         try:
+          analyze_start = time.time()
           logger.info(f"[analyze] request accepted {args['song_id']}")
           conn = get_db_connection()
           cur = conn.cursor()
@@ -40,9 +43,12 @@ def task_worker():
 
           feedback = analyze(result["lyrics"])
           
-          logger.info(f"[analyze] was done successfully, set generate_state to 2, id: {args['song_id']}")
           cur.execute("UPDATE c_content SET analysis = %s, generate_state = 2 WHERE id = %s", (feedback, args["song_id"]))
+          logger.info(f"[analyze] was done successfully, set generate_state to 2, id: {args['song_id']}")
           conn.commit()
+          analyze_end = time.time()
+          logger.info(f"[analyze] Task was done successfully, time: {analyze_end - analyze_start}s")
+
         except Exception as e:
           logger.error(f"[Error] {e}")
           logger.info(f"[analyze] set generate_state to 0 with error, id: {args['song_id']}")

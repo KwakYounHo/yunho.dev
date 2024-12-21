@@ -1,6 +1,7 @@
 services:
   client:
     image: ${GHCR_IMAGE_URL}/client:latest
+    container_name: client
     networks:
       - proxy
       - cache
@@ -11,6 +12,7 @@ services:
 
   api:
     image: ${GHCR_IMAGE_URL}/api:latest
+    container_name: api
     networks:
       - proxy
       - cache
@@ -27,6 +29,7 @@ services:
 
   analysis:
     image: ${GHCR_IMAGE_URL}/analysis:latest
+    container_name: analysis
     networks:
       - cache
       - db
@@ -44,11 +47,13 @@ services:
   
   cache:
     image: ${GHCR_IMAGE_URL}/cache:latest
+    container_name: cache
     networks:
       - cache
 
   db:
     image: ${GHCR_IMAGE_URL}/db:latest
+    container_name: db
     networks:
       - db
     environment:
@@ -60,6 +65,7 @@ services:
 
   proxy:
     image: ${GHCR_IMAGE_URL}/proxy:latest
+    container_name: proxy
     ports:
       - 80:80
       - 443:443 

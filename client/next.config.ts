@@ -8,9 +8,6 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   productionBrowserSourceMaps: false,
   compress: true,
-  // server config
-  hostname: "0.0.0.0",
-  port: 3000,
   images: {
     remotePatterns: [
       {

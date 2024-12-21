@@ -3,6 +3,7 @@ services:
     image: ${GHCR_IMAGE_URL}/client:latest
     networks:
       - proxy
+      - cache
     environment:
       - NODE_ENV=production
       - DOMAIN_NAME=${DOMAIN_NAME}
@@ -12,6 +13,7 @@ services:
     image: ${GHCR_IMAGE_URL}/api:latest
     networks:
       - proxy
+      - cache
       - db
     environment:
       - DEPLOY_MODE=production
@@ -26,7 +28,7 @@ services:
   analysis:
     image: ${GHCR_IMAGE_URL}/analysis:latest
     networks:
-      - proxy
+      - cache
       - db
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
@@ -43,7 +45,7 @@ services:
   cache:
     image: ${GHCR_IMAGE_URL}/cache:latest
     networks:
-      - proxy
+      - cache
 
   db:
     image: ${GHCR_IMAGE_URL}/db:latest
@@ -54,7 +56,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
-      - db_data:/bitnami/postgresql
+      - db_data:/var/lib/postgresql/data
 
   proxy:
     image: ${GHCR_IMAGE_URL}/proxy:latest
@@ -72,6 +74,8 @@ networks:
   proxy:
     driver: bridge
   db:
+    driver: bridge
+  cache:
     driver: bridge
 
 volumes:

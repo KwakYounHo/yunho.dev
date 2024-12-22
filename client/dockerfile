@@ -27,7 +27,7 @@ WORKDIR /app
 
 COPY --from=builder /build/.next/standalone .
 COPY --from=builder /build/.next/static ./.next/static
-COPY ./src/app/public ./public
+COPY ./public ./public
 
 RUN addgroup --system nodejs && \
   adduser --system --ingroup nodejs nextjs && \

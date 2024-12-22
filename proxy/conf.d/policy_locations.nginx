@@ -3,7 +3,7 @@ location ~* (/cgi-bin/|/.aws/|/.git/|%2e%2e|(\.\./)) {
   return 403;
 }
 
-location ~* \.(env|aws|php|git|json|bak|old|tmp|log)$ {
+location ~* \.(env|php|bak|old|tmp|log)$ {
   deny all;
   return 403;
 }

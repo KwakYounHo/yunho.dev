@@ -4,7 +4,6 @@ services:
     container_name: client
     networks:
       - proxy
-      - cache
     environment:
       - NODE_ENV=production
       - DOMAIN_NAME=${DOMAIN_NAME}

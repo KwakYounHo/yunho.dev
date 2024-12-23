@@ -22,7 +22,7 @@ jobs:
           echo "WEBPUSH_SUBJECT=${{ secrets.WEBPUSH_SUBJECT }}" >> ./client/.env.local
 
       - name: Build and Push
-        uses: ./.github/actions/docker-build/build-push.yml
+        uses: ./.github/actions/docker-build
         with:
           context: client
           image_name: client

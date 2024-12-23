@@ -8,7 +8,6 @@ inputs:
   image_name:
     description: "Fitting at GitHub Container Registry"
     required: true
-secrets:
   REGISTRY_VARIABLE:
     description: "Image name at GitHub Container Registry"
     required: true

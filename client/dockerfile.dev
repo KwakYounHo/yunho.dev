@@ -2,6 +2,7 @@ FROM node:20-bullseye
 
 ENV TZ=Asia/Seoul
 ENV EMAIL=e3d305ca3dd159da2aeb67c8994cea36
+ENV NODE_ENV=development
 
 WORKDIR /app
 
@@ -11,6 +12,5 @@ COPY . .
 
 RUN npm install
 
-ENV NODE_ENV=development
 
 CMD ["npm", "run", "dev"]

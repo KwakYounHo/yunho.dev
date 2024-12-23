@@ -8,41 +8,18 @@ on:
       - client/**
   workflow_dispatch:
 
-# jobs:
-#   build:
-#     uses: ./.github/workflows/reusable-docker-build.yml
-#     with:
-#       context: client
-#       image_name: client
-#     secrets:
-#       REGISTRY_VARIABLE: ${{ secrets.REGISTRY_VARIABLE }}
-#       CHCR_PAT: ${{ secrets.CHCR_PAT }}
-
 jobs:
-  docker-build-push:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set Up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Docker Login
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor}}
-          password: ${{ secrets.CHCR_PAT }}
-
       - name: Build and Push
-        uses: docker/build-push-action@v4
+        uses: ./.github/workflows/reusable-docker-build.yml
         with:
           context: client
-          tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/client:latest
-          platforms: linux/amd64,linux/arm64
-          push: true
-          build-args: |
-            - NEXT_PUBLIC_VAPID_PUBLIC_KEY=${{ secrets.VAPID_PUBLIC_KEY }}
-            - VAPID_PRIVATE_KEY=${{ secrets.VAPID_PRIVATE_KEY }}
-            - WEBPUSH_SUBJECT=${{ secrets.WEBPUSH_SUBJECT }}
+          image_name: client
+        secrets:
+          REGISTRY_VARIABLE: ${{ secrets.REGISTRY_VARIABLE }}
+          CHCR_PAT: ${{ secrets.CHCR_PAT }}

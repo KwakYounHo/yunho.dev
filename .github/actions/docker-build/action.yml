@@ -33,6 +33,6 @@ runs:
       uses: docker/build-push-action@v4
       with:
         context: ${{ inputs.context }}
-        tags: ghcr.io/${{ secrets.REGISTRY_VARIABLE }}/${{ inputs.image_name }}:latest
+        tags: ghcr.io/${{ inputs.REGISTRY_VARIABLE }}/${{ inputs.image_name }}:latest
         platforms: linux/amd64,linux/arm64
         push: true

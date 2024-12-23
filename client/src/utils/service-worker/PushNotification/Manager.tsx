@@ -5,7 +5,6 @@ import { saveSubscription, deleteSubscription } from "./actions";
 
 import { Switch } from "@/components/ui/switch";
 import { Bell } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 function urlBase64ToUnit8Array(base64String: string) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);

@@ -47,16 +47,23 @@ export const PushNotificationManager = () => {
   };
 
   const subscribeToPushNotification = async () => {
-    const registration = await navigator.serviceWorker.ready;
-    const subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUnit8Array(
-        process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
-      ),
-    });
-    setSubscription(subscription);
-    const serialized = JSON.parse(JSON.stringify(subscription));
-    saveSubscription(serialized);
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUnit8Array(
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
+        ),
+      });
+      setSubscription(subscription);
+      const serialized = JSON.parse(JSON.stringify(subscription));
+      saveSubscription(serialized);
+    } else if (permission === "default") {
+      Notification.requestPermission().then(subscribeToPushNotification);
+    } else {
+      alert("Please allow push notification");
+    }
   };
 
   const unSubscribeFromPushNotification = async () => {

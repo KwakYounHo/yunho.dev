@@ -10,10 +10,15 @@ on:
 
 jobs:
   build:
-    uses: ./.github/workflows/reusable-docker-build.yml
-    with:
-      context: cache
-      image_name: cache
-    secrets:
-      REGISTRY_VARIABLE: ${{ secrets.REGISTRY_VARIABLE }}
-      CHCR_PAT: ${{ secrets.CHCR_PAT }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build and Push
+        uses: ./.github/actions/docker-build/build-push.yml
+        with:
+          context: cache
+          image_name: cache
+          REGISTRY_VARIABLE: ${{ secrets.REGISTRY_VARIABLE }}
+          CHCR_PAT: ${{ secrets.CHCR_PAT }}

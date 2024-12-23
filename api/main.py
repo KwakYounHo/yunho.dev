@@ -1,5 +1,7 @@
+import json
+
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel
 from utils.db_connection import get_db_connection
 from utils.redis_client import add_task
@@ -118,6 +120,51 @@ async def create_impressive(request: ImpressiveRequest):
         conn.commit()
         
         return JSONResponse(content={"data": "done"}, status_code=201)
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+        cur.close()
+
+class SubscriptionKeys(BaseModel):
+    p256dh: str
+    auth: str
+class SubscriptionRequest(BaseModel):
+    endpoint: str
+    keys: SubscriptionKeys
+
+@app.post("/subscription")
+async def create_subscription(request: SubscriptionRequest):
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        cur.execute("INSERT INTO subscriptions (subscription) VALUES (%s)", (json.dumps(request.model_dump()),))
+        conn.commit()
+
+        return JSONResponse(content={"data": "done"}, status_code=201)
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+        cur.close()
+
+
+class SubscriptionDeleteRequest(BaseModel):
+    endpoint: str
+
+@app.put("/subscription")
+async def delete_subscription(request: SubscriptionDeleteRequest):
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        cur.execute("DELETE FROM subscriptions WHERE subscription->>'endpoint' = %s", (request.endpoint,))
+        conn.commit()
+        
+        return Response(status_code=204)
     except Exception as e:
         logger.error(e)
         raise HTTPException(status_code=500, detail=str(e))

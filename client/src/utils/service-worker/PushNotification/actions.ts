@@ -1,37 +1,24 @@
 "use server";
 
-import webpush, { type PushSubscription } from "web-push";
-
-webpush.setVapidDetails(
-  process.env.WEBPUSH_SUBJECT!,
-  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
-  process.env.VAPID_PRIVATE_KEY!
-);
-
-let subscription: PushSubscription | null = null;
+import { type PushSubscription } from "web-push";
+import { API_SERVER_URL } from "@/utils/apiServer";
 
 export const saveSubscription = async (sub: PushSubscription) => {
-  subscription = sub;
+  await fetch(`${API_SERVER_URL}/subscription`, {
+    method: "POST",
+    body: JSON.stringify(sub),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
 
-export const deleteSubscription = async () => {
-  subscription = null;
-};
-
-export const sendTestNotification = async () => {
-  if (!subscription) return;
-  try {
-    webpush.sendNotification(
-      subscription,
-      JSON.stringify({
-        title: "Test Notification",
-        body: "This is a test notification",
-        icon: "/icon.png",
-        badge: "/icon.png",
-        primaryKey: "123",
-      })
-    );
-  } catch (error) {
-    console.error("Error sending notification", error);
-  }
+export const deleteSubscription = async (sub: PushSubscription) => {
+  await fetch(`${API_SERVER_URL}/subscription`, {
+    method: "PUT",
+    body: JSON.stringify({ endpoint: sub.endpoint }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };

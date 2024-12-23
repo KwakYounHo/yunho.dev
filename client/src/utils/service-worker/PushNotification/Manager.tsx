@@ -1,11 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  saveSubscription,
-  deleteSubscription,
-  sendTestNotification,
-} from "./actions";
+import { saveSubscription, deleteSubscription } from "./actions";
 
 import { Switch } from "@/components/ui/switch";
 import { Bell } from "lucide-react";
@@ -67,9 +63,11 @@ export const PushNotificationManager = () => {
   };
 
   const unSubscribeFromPushNotification = async () => {
-    subscription?.unsubscribe();
+    if (!subscription) return;
+    const serialized = JSON.parse(JSON.stringify(subscription));
+    subscription.unsubscribe();
     setSubscription(null);
-    deleteSubscription();
+    deleteSubscription(serialized);
   };
 
   return (
@@ -85,11 +83,6 @@ export const PushNotificationManager = () => {
                 : subscribeToPushNotification
             }
           />
-          {subscription && (
-            <Button onClick={sendTestNotification}>
-              Send Test Notification
-            </Button>
-          )}
         </div>
       ) : null}
     </>

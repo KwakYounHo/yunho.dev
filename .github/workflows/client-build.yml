@@ -20,6 +20,5 @@ jobs:
         with:
           context: client
           image_name: client
-        secrets:
           REGISTRY_VARIABLE: ${{ secrets.REGISTRY_VARIABLE }}
           CHCR_PAT: ${{ secrets.CHCR_PAT }}

@@ -1,15 +1,64 @@
 import json
+import threading
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel
 from utils.db_connection import get_db_connection
-from utils.redis_client import add_task
+from utils.redis_client import add_task, listen_task_result
 from utils.logger import get_logger
+from contextlib import asynccontextmanager
+from utils.web_push import send_notification
 
 logger = get_logger(__name__)
 
-app = FastAPI()
+def handle_task_result(function_name: str, target_id: str):
+    logger.info(f"[{function_name}] task completed for target_id: {target_id}")
+    if function_name == "analyze":
+        metadata = {
+            "song_id": target_id,
+            "primary_key": 201
+        }
+        message = {
+            "title": "해석이 등록되었어요!",
+            "body": "등록하신 게시물에 해석이 등록되었어요",
+            "icon": "/icon.png",
+            "badge": "/icon.png",
+            "metadata": metadata
+        }
+        try:
+            conn = get_db_connection()
+            cur = conn.cursor()
+
+            cur.execute("SELECT subscription FROM subscriptions")
+            subscriptions = cur.fetchall()
+
+            for subscription in subscriptions:
+                failed = 0
+                try:
+                    send_notification(subscription["subscription"], message)
+                except Exception as e:
+                    failed += 1
+                    logger.error(f"Failed to send notification: {e}")
+                
+            total_notification = len(subscriptions)
+            success = total_notification - failed
+            logger.info(f"Notification sent to {success}/{total_notification}")
+        except Exception as e:
+            logger.error(f"[Error] Failed to send notification: {e}")
+        finally:
+            conn.close()
+            cur.close()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    thread = threading.Thread(target=listen_task_result, args=(handle_task_result,), daemon=True)
+    thread.start()
+    logger.info("Background tasks started and listening for task results")
+    yield
+    logger.info("Background tasks stopped")
+
+app = FastAPI(lifespan=lifespan)
 
 @app.get("/lyrics")
 def songs():

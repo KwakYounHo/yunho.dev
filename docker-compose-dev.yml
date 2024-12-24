@@ -20,6 +20,8 @@ services:
       - app-dev
     environment:
       - DEPLOY_MODE=development
+      - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
+      - WEBPUSH_SUBJECT=${WEBPUSH_SUBJECT}
     volumes:
       - ./api:/app
   analysis:

@@ -1,5 +1,5 @@
 import utils.logger
-from utils.task_queue import task_worker
+from task_queue import task_worker
 
 logger = utils.logger.getLogger(__name__)
 

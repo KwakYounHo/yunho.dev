@@ -9,7 +9,8 @@ self.addEventListener("push", (event) => {
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
-        primaryKey: data.primaryKey,
+        primaryKey: data.metadata.primary_key,
+        songId: data.metadata.song_id,
       },
     };
     event.waitUntill(self.registration.showNotification(title, options));

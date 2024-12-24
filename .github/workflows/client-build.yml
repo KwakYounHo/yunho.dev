@@ -18,8 +18,6 @@ jobs:
       - name: Create .env file
         run: |
           echo "NEXT_PUBLIC_VAPID_PUBLIC_KEY=${{ secrets.VAPID_PUBLIC_KEY }}" >> ./client/.env.local
-          echo "VAPID_PRIVATE_KEY=${{ secrets.VAPID_PRIVATE_KEY }}" >> ./client/.env.local
-          echo "WEBPUSH_SUBJECT=${{ secrets.WEBPUSH_SUBJECT }}" >> ./client/.env.local
 
       - name: Build and Push
         uses: ./.github/actions/docker-build

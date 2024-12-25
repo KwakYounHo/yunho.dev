@@ -27,13 +27,9 @@ def task_worker():
           cur.execute("SELECT lyrics, generate_state FROM c_content WHERE id = %s", (args["song_id"],))
           result = cur.fetchone()
           
-          if result["generate_state"] > 0:
-              logger.error(f"[ERROR] {args['song_id']} already analyzed")
-              continue
-
-          logger.info(f"[analyze] processing, set generate_state to 1, id: {args['song_id']}")
-          cur.execute("UPDATE c_content SET generate_state = 1 WHERE id = %s", (args["song_id"],))
-          conn.commit()
+          if result["generate_state"] > 1:
+            logger.error(f"[ERROR] {args['song_id']} already analyzed")
+            continue
 
           feedback = analyze(result["lyrics"])
           
@@ -53,7 +49,5 @@ def task_worker():
           task_result("analyze", args["song_id"], "error")
           redis_client.rpush("task_queue", json.dumps({"function_name": "analyze", "args": {"song_id": args["song_id"]}}))
         finally:
-          if conn:
-              conn.close()
-          if cur:
-              cur.close()
+          conn.close()
+          cur.close()

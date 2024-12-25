@@ -146,6 +146,7 @@ def lyrics(id: str):
 
         if song_content["generateState"] == 0:
             add_task("analyze", {"song_id": id})
+            cur.execute("UPDATE c_content SET generate_state = 1 WHERE id = %s", (id,))
             logger.info(f"Added analyze task to task queue id:{id}")
         
         return JSONResponse(content={"data": song_content}, status_code=200)

@@ -80,7 +80,7 @@ services:
 
 networks:
   proxy:
-    driver: bridge
+    external: true
   db:
     driver: bridge
   cache:

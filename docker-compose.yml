@@ -74,9 +74,8 @@ services:
     networks:
       - proxy
     volumes:
-      - ./certbot/etc:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-      - ./certbot/var/log/letsencrypt:/var/log/letsencrypt
+      - certbot_letsencrypt:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
 
 networks:
   proxy:
@@ -88,4 +87,8 @@ networks:
 
 volumes:
   db_data:
+    external: true
+  certbot_letsencrypt:
+    external: true
+  certbot_www:
     external: true

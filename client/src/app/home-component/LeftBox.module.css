@@ -1,3 +1,7 @@
+.homeParagraph {
+  @apply w-full;
+}
+
 .homeParagraph h2 {
-  @apply xl:text-9xl lg:text-8xl text-6xl font-bold text-primary animation-in;
+  @apply xl:text-9xl lg:text-8xl text-6xl font-bold text-primary;
 }

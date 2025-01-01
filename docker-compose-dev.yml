@@ -66,3 +66,7 @@ services:
 networks:
   app-dev:
     driver: bridge
+
+volumes:
+  dev-db-data:
+    external: true

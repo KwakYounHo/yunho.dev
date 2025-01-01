@@ -39,7 +39,7 @@ const LyricsDetail = () => {
   }, [currentSong, songContents, dispatch]);
 
   return (
-    <ScrollArea className="w-full h-full">
+    <ScrollArea className="w-full h-[90dvh] px-4">
       <div className="flex flex-col gap-4 w-full justify-center items-center">
         {songContent && (
           <>

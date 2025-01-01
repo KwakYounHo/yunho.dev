@@ -1,9 +1,10 @@
 import { FirstImpression } from "./FistImpression";
+import styles from "./LeftBox.module.css";
 
 const LeftBox = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full gap-4">
-      <div className="w-full">
+      <div className={`${styles.homeParagraph} w-full`}>
         <h2>Hello</h2>
         <h2>World :D</h2>
 

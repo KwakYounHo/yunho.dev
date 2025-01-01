@@ -24,7 +24,7 @@ const HamburgerModal = ({ className }: { className?: string }) => {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button
-          className={cn("lg:hidden w-10 h-10", className)}
+          className={cn("xl:hidden w-10 h-10", className)}
           variant="outline"
           onClick={toggleDropdown}
         >

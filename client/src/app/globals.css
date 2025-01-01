@@ -74,10 +74,7 @@ body {
 
 @layer components {
   main {
-    @apply flex items-center justify-center min-h-screen;
-  }
-  h2 {
-    @apply xl:text-9xl lg:text-8xl text-6xl font-bold text-primary animation-in;
+    @apply flex items-center justify-center min-h-[100dvh];
   }
 }
 

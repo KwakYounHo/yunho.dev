@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { saveSubscription, deleteSubscription } from "./actions";
 
-import { Switch } from "@/components/ui/switch";
-import { Bell } from "lucide-react";
+import { Toggle } from "@/components/ui/toggle";
+import { Bell, BellOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 function urlBase64ToUnit8Array(base64String: string) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -72,17 +73,22 @@ export const PushNotificationManager = () => {
   return (
     <>
       {isSupported ? (
-        <div className={"flex items-center gap-2"}>
-          <Bell className={"w-[1.2rem] h-[1.2rem] text-foreground"} />
-          <Switch
-            checked={subscription !== null}
-            onCheckedChange={
+        <Button variant={"outline"} size={"icon"} asChild>
+          <Toggle
+            pressed={subscription !== null}
+            onPressedChange={
               subscription
                 ? unSubscribeFromPushNotification
                 : subscribeToPushNotification
             }
-          />
-        </div>
+          >
+            {subscription !== null ? (
+              <Bell className={"w-[1.2rem] h-[1.2rem] text-foreground"} />
+            ) : (
+              <BellOff className={"w-[1.2rem] h-[1.2rem] text-foreground"} />
+            )}
+          </Toggle>
+        </Button>
       ) : null}
     </>
   );

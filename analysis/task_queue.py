@@ -31,7 +31,7 @@ def task_worker():
             logger.error(f"[ERROR] {args['song_id']} already analyzed")
             continue
 
-          feedback = analyze(result["lyrics"])
+          feedback = analyze(result["lyrics"], args["song_title"], args["artist"])
           
           cur.execute("UPDATE c_content SET analysis = %s, generate_state = 2 WHERE id = %s", (feedback, args["song_id"]))
           logger.info(f"[analyze] was done successfully, set generate_state to 2, id: {args['song_id']}")

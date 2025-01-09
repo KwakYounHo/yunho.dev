@@ -20,10 +20,12 @@ llm = ChatOpenAI(
   model="gpt-4o-mini",
 )
 
-def analyze(markdown_text):
+def analyze(markdown_text, song_title, artist):
   try:
     human_message = HumanMessagePromptTemplate.from_template(human_template).format(
-      markdown_text=markdown_text
+      markdown_text=markdown_text,
+      song_title=song_title,
+      artist=artist
     )
     messages = [
       SystemMessage(content=assistant_introduction),

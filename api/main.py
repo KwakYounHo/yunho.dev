@@ -108,10 +108,7 @@ async def create_song(request: SongCreate):
             (request.id, request.title, request.artist, request.albumCover, request.lyrics)
         )
         
-        cur.execute(
-            "SELECT id, title, artist, album_cover as \"albumCover\" FROM song WHERE id = %s",
-            (request.id,)
-        )
+        cur.execute("SELECT * FROM get_song(%s)", (request.id,))
         created_song = cur.fetchone()
         
         conn.commit()
@@ -145,7 +142,9 @@ def lyrics(id: str):
         song_content = cur.fetchone()
 
         if song_content["generateState"] == 0:
-            add_task("analyze", {"song_id": id})
+            cur.execute("SELECT title, artist FROM song WHERE id = %s", (id,))
+            song_info = cur.fetchone()
+            add_task("analyze", {"song_id": id, "song_title": song_info["title"], "artist": song_info["artist"]})
             cur.execute("UPDATE c_content SET generate_state = 1 WHERE id = %s", (id,))
             logger.info(f"Added analyze task to task queue id:{id}")
         

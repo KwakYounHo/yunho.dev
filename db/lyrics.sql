@@ -61,3 +61,19 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION get_song(IN p_id UUID)
+RETURNS TABLE (
+  id UUID,
+  title VARCHAR(64),
+  artist VARCHAR(64),
+  albumCover VARCHAR(255)
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN QUERY 
+    SELECT s.id, s.title, s.artist, s.album_cover
+    FROM song AS s
+    WHERE s.id = p_id;
+END;
+$$;

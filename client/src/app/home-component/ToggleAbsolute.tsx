@@ -4,7 +4,7 @@ import { PushNotificationManager } from "@/utils/service-worker/PushNotification
 
 const ToggleAbsolute = () => {
   return (
-    <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+    <div className="fixed top-4 right-4 z-50 flex items-center gap-1">
       <PushNotificationManager />
       <GoHome />
       <ThemeToggle />

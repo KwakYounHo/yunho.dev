@@ -37,9 +37,9 @@ const LyricsList = ({ setIsOpen }: LyricsListProps) => {
   }, [songs, currentSong.id, dispatch]);
 
   return (
-    <ScrollArea className="lg:h-[50vh]">
+    <ScrollArea className="h-[50vh]">
       <div className="flex flex-col gap-4">
-        <h3 className="text-xl font-bold text-muted-foreground hidden lg:block">
+        <h3 className="text-xl font-bold text-muted-foreground hidden xl:block">
           Lyrics List
         </h3>
         <div>

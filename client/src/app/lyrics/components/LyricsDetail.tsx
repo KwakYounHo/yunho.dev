@@ -20,6 +20,7 @@ const LyricsDetail = () => {
   const dispatch = useDispatch();
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const currentSongChange = useRef(false);
 
   useEffect(() => {
     if (!currentSong || currentSong.id === "init") return;
@@ -40,17 +41,29 @@ const LyricsDetail = () => {
     }
   }, [currentSong, songContents, dispatch]);
 
+  // 스크롤 이벤트
+  // 노래 변경시 스크롤
   useEffect(() => {
-    setTab("lyrics");
-    const viewport = scrollAreaRef.current?.querySelector(
-      "[data-radix-scroll-area-viewport]"
-    );
-    if (viewport) {
-      viewport.scrollTo({ top: 0, behavior: "smooth" });
+    // 해석 탭이었다면 가사 탭으로 바꾸기
+    if (tab !== "lyrics") {
+      setTab("lyrics");
+      currentSongChange.current = true;
+    }
+
+    const scrollTop = scrollAreaRef.current?.querySelector("[data-scroll-top]");
+    if (scrollTop) {
+      scrollTop.scrollIntoView({ behavior: "smooth" });
     }
   }, [currentSong.id]);
 
+  // 탭 변경시 스크롤
   useEffect(() => {
+    // 현재 노래 변경으로 인한 이벤트는 무시
+    if (currentSongChange.current) {
+      currentSongChange.current = false;
+      return;
+    }
+
     const tabScroll = scrollAreaRef.current?.querySelector(
       "[data-change-tab-scroll]"
     );
@@ -67,6 +80,7 @@ const LyricsDetail = () => {
       <div className="flex flex-col gap-4 w-full justify-center items-center">
         {songContent && (
           <>
+            <div data-scroll-top />
             <Image
               src={currentSong.albumCover}
               alt={currentSong.title}

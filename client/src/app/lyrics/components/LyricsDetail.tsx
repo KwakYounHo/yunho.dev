@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useAppSelector } from "@/app/hooks/state";
 import { Viewer } from "@/utils/Markdown";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { SongContent } from "@/types/songs";
 import { addSongContents } from "@/utils/state/song-contents";
 import { useDispatch } from "react-redux";
-
+import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 
@@ -18,6 +18,8 @@ const LyricsDetail = () => {
   const [songContent, setSongContent] = useState<SongContent | null>(null);
   const [tab, setTab] = useState<"lyrics" | "analysis">("lyrics");
   const dispatch = useDispatch();
+
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!currentSong || currentSong.id === "init") return;
@@ -38,8 +40,30 @@ const LyricsDetail = () => {
     }
   }, [currentSong, songContents, dispatch]);
 
+  useEffect(() => {
+    setTab("lyrics");
+    const viewport = scrollAreaRef.current?.querySelector(
+      "[data-radix-scroll-area-viewport]"
+    );
+    if (viewport) {
+      viewport.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [currentSong.id]);
+
+  useEffect(() => {
+    const tabScroll = scrollAreaRef.current?.querySelector(
+      "[data-change-tab-scroll]"
+    );
+    if (tabScroll) {
+      tabScroll.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [tab]);
+
   return (
-    <ScrollArea className="w-full h-[90dvh] px-4">
+    <ScrollArea
+      className="w-full h-[90dvh] px-4 xl:max-w-[50dvw] mx-auto"
+      ref={scrollAreaRef}
+    >
       <div className="flex flex-col gap-4 w-full justify-center items-center">
         {songContent && (
           <>
@@ -50,23 +74,55 @@ const LyricsDetail = () => {
               height={100}
               className="rounded-lg w-1/3"
             />
-            <h1>{currentSong.title}</h1>
-            <h3>{currentSong.artist}</h3>
-            <div className="flex gap-4">
-              <Button onClick={() => setTab("lyrics")}>가사</Button>
-              <Button onClick={() => setTab("analysis")}>분석</Button>
+            <div className="flex flex-col w-full gap-1 justify-center items-center">
+              <h1 className="text-xl font-bold">{currentSong.title}</h1>
+              <h3 className="text-sm text-muted-foreground">
+                {currentSong.artist}
+              </h3>
             </div>
-            {tab === "lyrics" && (
-              <Viewer value={songContent.lyrics} className="animation-in" />
-            )}
-            {tab === "analysis" &&
-              (songContent.analysis ? (
-                <Viewer value={songContent.analysis} className="animation-in" />
-              ) : (
-                <div className="mt-2 text-center w-full animation-in">
-                  <p className="text-lg">아직 분석이 등록되지 않았습니다.</p>
-                </div>
-              ))}
+            <div className="w-full">
+              <div data-change-tab-scroll />
+              <div className="flex w-full justify-center items-center sticky top-0 backdrop-blur-sm border border-border">
+                <Button
+                  className={cn(
+                    tab === "lyrics" &&
+                      "bg-primary text-background rounded-none",
+                    "w-1/2"
+                  )}
+                  variant="ghost"
+                  onClick={() => setTab("lyrics")}
+                  disabled={tab === "lyrics"}
+                >
+                  가사
+                </Button>
+                <Button
+                  className={cn(
+                    tab === "analysis" &&
+                      "bg-primary text-background rounded-none",
+                    "w-1/2"
+                  )}
+                  variant="ghost"
+                  onClick={() => setTab("analysis")}
+                  disabled={tab === "analysis"}
+                >
+                  분석
+                </Button>
+              </div>
+              {tab === "lyrics" && (
+                <Viewer value={songContent.lyrics} className="animation-in" />
+              )}
+              {tab === "analysis" &&
+                (songContent.analysis ? (
+                  <Viewer
+                    value={songContent.analysis}
+                    className="animation-in"
+                  />
+                ) : (
+                  <div className="mt-2 text-center w-full animation-in">
+                    <p className="text-lg">아직 분석이 등록되지 않았습니다.</p>
+                  </div>
+                ))}
+            </div>
           </>
         )}
         {songs.length === 0 && <p>표시할 데이터가 없습니다</p>}

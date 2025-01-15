@@ -50,9 +50,11 @@ const LyricsDetail = () => {
       currentSongChange.current = true;
     }
 
-    const scrollTop = scrollAreaRef.current?.querySelector("[data-scroll-top]");
+    const scrollTop = scrollAreaRef.current?.querySelector(
+      "[data-radix-scroll-area-viewport]"
+    );
     if (scrollTop) {
-      scrollTop.scrollIntoView({ behavior: "smooth" });
+      scrollTop.scrollTop = 0;
     }
   }, [currentSong.id]);
 
